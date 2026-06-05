@@ -10,6 +10,14 @@ A small product catalog and cart app built with Next.js App Router, React, and t
 - Quantity updates, item removal, and cart total summary.
 - Optimized remote product images through `next/image`.
 
+## Approach and Design Choices
+
+The app uses the Next.js App Router to keep routing simple and predictable: the catalog lives on the home route, product details use a dynamic route, and the cart has its own client page. Product data is fetched from DummyJSON, with product detail responses cached by Next.js for better repeat-load performance.
+
+Cart behavior is handled with a lightweight React context instead of adding a larger state library. This keeps the implementation easy to follow while still sharing cart state across the navigation, product cards, product detail page, and cart page. The cart is also persisted in `localStorage` so items remain after a browser refresh.
+
+Search is debounced before calling the API to avoid unnecessary requests while the user is typing. Product images use `next/image` with an allowed remote image host, which keeps the app aligned with Next.js performance recommendations.
+
 ## Getting Started
 
 Install dependencies:
