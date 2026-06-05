@@ -1,8 +1,12 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 
+/**
+ * Displays the persisted cart, quantity controls, and order total summary.
+ */
 export default function CartPage() {
   const { cart, addToCart, updateQuantity, removeFromCart, getCartCount } = useCart();
 
@@ -26,7 +30,7 @@ export default function CartPage() {
       <div style={{ display: 'grid', gap: '24px', marginTop: '24px' }}>
         {cart.map((item) => (
           <div key={item.id} style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: '20px', padding: '16px', border: '1px solid #ddd', borderRadius: '12px' }}>
-            <img src={item.thumbnail} alt={item.title} style={{ width: '140px', height: '140px', objectFit: 'cover', borderRadius: '10px' }} />
+            <Image src={item.thumbnail} alt={item.title} width={140} height={140} style={{ width: '140px', height: '140px', objectFit: 'cover', borderRadius: '10px' }} />
             <div>
               <h2>{item.title}</h2>
               <p style={{ margin: '10px 0' }}>{item.description}</p>

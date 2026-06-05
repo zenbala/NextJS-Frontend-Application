@@ -1,8 +1,11 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 
+/**
+ * Displays the product catalog with a debounced search box backed by DummyJSON.
+ */
 export default function SearchableProductList({ initialLimit = 12 }) {
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState([]);
@@ -10,7 +13,10 @@ export default function SearchableProductList({ initialLimit = 12 }) {
   const [error, setError] = useState(null);
   const debounceRef = useRef(null);
 
-  async function fetchDefault() {
+  /**
+   * Fetches the default catalog page used for the initial and reset states.
+   */
+  const fetchDefault = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -23,9 +29,12 @@ export default function SearchableProductList({ initialLimit = 12 }) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [initialLimit]);
 
-  async function fetchSearch(q) {
+  /**
+   * Runs a product search, falling back to the default list for empty queries.
+   */
+  const fetchSearch = useCallback(async (q) => {
     setLoading(true);
     setError(null);
     try {
@@ -42,20 +51,16 @@ export default function SearchableProductList({ initialLimit = 12 }) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [fetchDefault]);
 
   useEffect(() => {
-    fetchDefault();
-  }, []);
-
-  useEffect(() => {
-    // debounce queries
+    // Debounce typing so the API is not called on every keystroke.
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       fetchSearch(query.trim());
     }, 300);
     return () => clearTimeout(debounceRef.current);
-  }, [query]);
+  }, [fetchSearch, query]);
 
   return (
     <div>
@@ -69,7 +74,10 @@ export default function SearchableProductList({ initialLimit = 12 }) {
         />
         <button
           type="button"
-          onClick={() => { setQuery(''); fetchDefault(); }}
+          onClick={() => {
+            setQuery('');
+            fetchDefault();
+          }}
           style={{ padding: '10px 14px', borderRadius: '8px', background: '#111827', color: '#fff', border: 'none' }}
         >
           Reset

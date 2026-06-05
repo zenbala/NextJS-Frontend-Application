@@ -2,6 +2,9 @@
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 
+/**
+ * Main navigation bar with links and the current cart item count.
+ */
 export default function Navbar() {
   const { getCartCount } = useCart();
 

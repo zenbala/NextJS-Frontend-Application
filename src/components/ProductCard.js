@@ -1,16 +1,22 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 
+/**
+ * Renders a compact product preview with detail navigation and cart actions.
+ */
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
 
   return (
     <div style={{ border: '1px solid #eee', padding: '15px', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <img
+      <Image
         src={product.thumbnail}
         alt={product.title}
+        width={320}
+        height={200}
         style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '10px' }}
       />
       <div>

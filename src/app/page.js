@@ -1,5 +1,8 @@
 import SearchableProductList from '@/components/SearchableProductList';
 
+/**
+ * Home route that shows the searchable product catalog.
+ */
 export default function ProductListPage() {
   return (
     <div>

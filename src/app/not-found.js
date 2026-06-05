@@ -1,3 +1,6 @@
+/**
+ * Fallback route rendered by Next.js when a page or product cannot be found.
+ */
 export default function NotFound() {
   return (
     <main style={{ padding: '40px', textAlign: 'center' }}>

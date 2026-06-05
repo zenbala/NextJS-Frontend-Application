@@ -1,7 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 
+/**
+ * Shows the full product information and lets the shopper add it to the cart.
+ */
 export default function ProductDetail({ product }) {
   const { addToCart } = useCart();
 
@@ -9,9 +13,11 @@ export default function ProductDetail({ product }) {
     <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }}>
-          <img
+          <Image
             src={product.images?.[0] ?? product.thumbnail}
             alt={product.title}
+            width={600}
+            height={500}
             style={{ width: '100%', borderRadius: '12px', objectFit: 'cover', maxHeight: '500px' }}
           />
 
